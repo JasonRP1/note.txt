@@ -1,0 +1,27 @@
+Query #2: select a,b from tablel UNION select c,d from table2
+1,2
+3,4
+4,5
+Rule:
+- The nubmer and the order of the columns must be the same in all queries
+
+Step #1: Determine # of columns
+
+SQLi attack (way #1):
+select ? from tablel UNION select NULL, NULL
+-error -> incorrect number of columns
+
+select ? from tablel UNION select NULL, NULL, NULL
+-200 response code -> correct number of columns
+
+SQLi attack (way #2):
+
+select a,b from table order by 3
+
+step #2: Determin the data type of the columns
+
+select a,b,c from tablel UNION select ‘a', NULL,NULL 
+->error -> column is not type string
+->no error -> column is of type text
+
+Script.py
